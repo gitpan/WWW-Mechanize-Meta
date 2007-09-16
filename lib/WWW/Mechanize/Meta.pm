@@ -9,26 +9,26 @@ use base 'WWW::Mechanize';
 
 =head1 NAME
 
-WWW::Mechanize::Meta - The great new WWW::Mechanize::Meta!
+WWW::Mechanize::Meta - Adds HEAD tag parsing to WWW::Mechanize
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
     use WWW::Mechanize::Meta;
 
-    my $foo = WWW::Mechanize::Meta->new();
-    ...
+    my $mech = WWW::Mechanize::Meta->new();
+    my @css=$mech->link('stylesheet');
+    foreach (@css){
+	print "$_->{href}\n";
+    }
+    
 
 =head1 METHODS
 
@@ -47,6 +47,7 @@ sub link {
 	my @params=split '; ',$link;
 	my $src=((shift @params)=~m/<(.*)>/);
 	my %params=map{m/(.*)=\"([^\"]*)\"/} @params;
+	$params{href}=$src;
 	push @links,\%params if !$type || $params{rel} eq $type;
     };
     return @links;
@@ -110,7 +111,7 @@ sub _parse_head{
 
 =head1 AUTHOR
 
-Andrey Kostenko, C<< <andrey at kostenko.name> >>
+Andrey Kostenko, C<< <andrey@kostenko.name> >>
 
 =head1 BUGS
 

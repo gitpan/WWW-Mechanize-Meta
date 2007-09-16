@@ -1,5 +1,8 @@
 Revision history for WWW-Mechanize-Meta
 
-0.01    Date/time
-        First version, released on an unsuspecting world.
+0.02	17.09.2007/01:10
+	Some changes in documentation. Fixed bug with href attribute
+
+0.01    16.09.2007/10:00
+        Initial release
 
