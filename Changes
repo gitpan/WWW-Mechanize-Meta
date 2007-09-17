@@ -1,5 +1,8 @@
 Revision history for WWW-Mechanize-Meta
 
+0.03	17.09.2007/22:58
+	Fool bug!!! href attribute always was 1
+
 0.02	17.09.2007/01:10
 	Some changes in documentation. Fixed bug with href attribute
 
