@@ -3,6 +3,7 @@ package WWW::Mechanize::Meta;
 use warnings;
 use strict;
 use Data::Dumper;
+use HTTP::Headers;
 use HTML::HeadParser;
 
 use base 'WWW::Mechanize';
@@ -17,7 +18,7 @@ Version 0.03
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 =head1 SYNOPSIS
 
@@ -54,6 +55,24 @@ sub link {
     
 }
 
+=head2 rss
+
+Returns all rss objects for this page
+
+=cut
+
+sub rss {
+    my $self=shift;
+    my @links=$self->link('alternate');
+    my @news;
+    foreach (@links){
+	push @news,$_ if $_->{type} eq 'application/rss+xml' or $_->{type} eq 'application/rss+xml';
+    }
+    return @news;
+        
+}
+
+
 =head2 headtag
 
 Returns raw header object
@@ -78,6 +97,17 @@ sub new{
     return $self;
 }
 
+=head2 title
+
+=cut
+
+sub title {
+    my $self = shift;
+    return unless $self->is_html;
+    return $self->{head}->header('Title');
+}
+			
+
 =head2 update_html
 
 =cut
@@ -88,7 +118,9 @@ sub update_html{
     $self->SUPER::update_html($html);
 #    warn $html;
     if ($self->is_html){
-	$self->{headparser}->parse($self->content);
+	utf8::decode($html);
+	$self->{headparser}{'header'} = HTTP::Headers->new();
+	$self->{headparser}->parse($html);
 	$self->{head}=$self->{headparser}->header;
     } else {
 	$self->{head}=undef;

@@ -9,6 +9,7 @@ SIGNATURE
 t/00-load.t
 t/01-head.t
 t/02-rss.t
+t/03-title.t
 t/pod-coverage.t
 t/pod.t
 tmp/hp.pl
