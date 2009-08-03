@@ -1,6 +1,7 @@
 #!perl -T
-use Test::More skip_all => 'Bug with encoding was not fixed';
+#use Test::More skip_all => 'Bug with encoding was not fixed';
 use Test::More tests => 3;
+use utf8;
 
 BEGIN {
 	use_ok( 'WWW::Mechanize::Meta' );
@@ -8,6 +9,5 @@ BEGIN {
 }
 my $mech=WWW::Mechanize::Meta->new();
 $mech->get('http://bash.org.ru');
-warn $mech->title;
 is($mech->title,'bash.org.ru - Цитатник Рунета');
 

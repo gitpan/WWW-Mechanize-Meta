@@ -14,11 +14,11 @@ WWW::Mechanize::Meta - Adds HEAD tag parsing to WWW::Mechanize
 
 =head1 VERSION
 
-Version 0.05
+Version 0.06
 
 =cut
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 =head1 SYNOPSIS
 
@@ -40,19 +40,20 @@ Returns link tag with attribure rel = $type. If no attribute $type given, return
 =cut
 
 sub link {
-    my $self=shift;
-    my $type=shift;
+    my $self = shift;
+    my $type = shift;
     my @links;
-    foreach my $link ($self->{head}->header('link')){
-#FIXME	this is bad
-	my @params=split '; ',$link;
-	my ($src)=((shift @params)=~m/\<(.*)\>/);
-	my %params=map{m/(.*)=\"([^\"]*)\"/} @params;
-	$params{href}=$src;
-	push @links,\%params if !$type || $params{rel} eq $type;
-    };
+    foreach my $link ( $self->{head}->header('link') ) {
+
+        #FIXME	this is bad
+        my @params = split '; ', $link;
+        my ($src) = ( ( shift @params ) =~ m/\<(.*)\>/ );
+        my %params = map { m/(.*)=\"([^\"]*)\"/ } @params;
+        $params{href} = $src;
+        push @links, \%params if !$type || $params{rel} eq $type;
+    }
     return @links;
-    
+
 }
 
 =head2 rss
@@ -62,16 +63,17 @@ Returns all rss objects for this page
 =cut
 
 sub rss {
-    my $self=shift;
-    my @links=$self->link('alternate');
+    my $self  = shift;
+    my @links = $self->link('alternate');
     my @news;
-    foreach (@links){
-	push @news,$_ if $_->{type} eq 'application/rss+xml' or $_->{type} eq 'application/rss+xml';
+    foreach (@links) {
+        push @news, $_
+          if $_->{type} eq 'application/rss+xml'
+              or $_->{type} eq 'application/atom+xml';
     }
     return @news;
-        
-}
 
+}
 
 =head2 headtag
 
@@ -79,8 +81,8 @@ Returns raw header object
 
 =cut
 
-sub headtag{
-    my $self=shift;
+sub headtag {
+    my $self = shift;
     return $self->{head};
 }
 
@@ -90,10 +92,10 @@ sub headtag{
 
 =cut
 
-sub new{
-    my $class=shift;
-    my $self=$class->SUPER::new(@_);
-    $self->{headparser}=HTML::HeadParser->new();
+sub new {
+    my $class = shift;
+    my $self  = $class->SUPER::new(@_);
+    $self->{headparser} = HTML::HeadParser->new();
     return $self;
 }
 
@@ -104,27 +106,29 @@ sub new{
 sub title {
     my $self = shift;
     return unless $self->is_html;
-    return $self->{head}->header('Title');
+    my $title = $self->{head}->header('Title');
+    return $title;
 }
-			
 
 =head2 update_html
 
 =cut
 
-sub update_html{
-    my $self=shift;
-    my $html=shift;
+sub update_html {
+    my $self = shift;
+    my $html = shift;
     $self->SUPER::update_html($html);
-#    warn $html;
-    if ($self->is_html){
-	utf8::decode($html);
-	$self->{headparser}{'header'} = HTTP::Headers->new();
-	$self->{headparser}->parse($html);
-	$self->{head}=$self->{headparser}->header;
-    } else {
-	$self->{head}=undef;
-	$self->{link}=undef;
+
+    #    warn $html;
+    if ( $self->is_html ) {
+        utf8::decode($html);
+        $self->{headparser}{'header'} = HTTP::Headers->new();
+        $self->{headparser}->parse($html);
+        $self->{head} = $self->{headparser}->header;
+    }
+    else {
+        $self->{head} = undef;
+        $self->{link} = undef;
     }
     return;
 }
@@ -133,12 +137,12 @@ sub update_html{
 
 =cut
 
-sub _parse_head{
-    my $self=shift;
+sub _parse_head {
+    my $self = shift;
     return unless $self->is_html;
     require HTML::HeadParser;
     my $p = HTML::HeadParser->new;
-    $p->parse($self->content);
+    $p->parse( $self->content );
 }
 
 =head1 AUTHOR
@@ -192,4 +196,4 @@ under the same terms as Perl itself.
 
 =cut
 
-1; # End of WWW::Mechanize::Meta
+1;    # End of WWW::Mechanize::Meta
