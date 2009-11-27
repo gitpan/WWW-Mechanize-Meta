@@ -1,17 +1,12 @@
 use strict;
 use warnings;
-use ExtUtils::MakeMaker;
+use inc::Module::Install;
 
-WriteMakefile(
-    NAME                => 'WWW::Mechanize::Meta',
-    AUTHOR              => 'Andrey Kostenko <andrey@kostenko.name>',
-    VERSION_FROM        => 'lib/WWW/Mechanize/Meta.pm',
-    ABSTRACT_FROM       => 'lib/WWW/Mechanize/Meta.pm',
-    PL_FILES            => {},
-    PREREQ_PM => {
-        'Test::More' => 0,
-	'WWW::Mechanize' => 1.20,
-    },
-    dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'WWW-Mechanize-Meta-*' },
-);
+name 'WWW-Mechanize-Meta';
+all_from 'lib/WWW/Mechanize/Meta.pm';
+requires 'WWW::Mechanize' => 1.20;
+requires 'HTTP::Headers';
+requires 'HTML::HeadParser';
+repository 'http://developers.rambler.ru/svn/perlmodules/WWW-Mechanize-Meta';
+
+WriteAll();

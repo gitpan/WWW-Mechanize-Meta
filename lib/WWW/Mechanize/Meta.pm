@@ -14,11 +14,11 @@ WWW::Mechanize::Meta - Adds HEAD tag parsing to WWW::Mechanize
 
 =head1 VERSION
 
-Version 0.06
+Version 0.07
 
 =cut
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 =head1 SYNOPSIS
 
@@ -45,7 +45,6 @@ sub link {
     my @links;
     foreach my $link ( $self->{head}->header('link') ) {
 
-        #FIXME	this is bad
         my @params = split '; ', $link;
         my ($src) = ( ( shift @params ) =~ m/\<(.*)\>/ );
         my %params = map { m/(.*)=\"([^\"]*)\"/ } @params;
@@ -187,7 +186,7 @@ L<http://search.cpan.org/dist/WWW-Mechanize-Meta>
 
 =head1 ACKNOWLEDGEMENTS
 
-=head1 COPYRIGHT & LICENSE
+=head1 LICENSE
 
 Copyright 2007 Andrey Kostenko, all rights reserved.
 

@@ -1,5 +1,9 @@
 Revision history for WWW-Mechanize-Meta
 
+0.07    пятница, 27 ноября 2009 г. 17:40:44 (MSK)
+        fixed tests
+        CPANTS
+0.06    пятница, 27 ноября 2009 г. 17:49:46 (MSK)
 0.05    понедельник,  3 августа 2009 г. 17:40:58 (MSD)
         now WWW::Mechanize::RSS find atom feeds
 0.04	29.09.2007/15:06

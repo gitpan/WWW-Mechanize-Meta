@@ -1,23 +1,27 @@
---- #YAML:1.0
-name:               WWW-Mechanize-Meta
-version:            0.06
-abstract:           Adds HEAD tag parsing to WWW::Mechanize
+---
+abstract: 'Adds HEAD tag parsing to WWW::Mechanize'
 author:
-    - Andrey Kostenko <andrey@kostenko.name>
-license:            unknown
-distribution_type:  module
-configure_requires:
-    ExtUtils::MakeMaker:  0
+  - 'Andrey Kostenko, C<< <andrey@kostenko.name> >>'
 build_requires:
-    ExtUtils::MakeMaker:  0
-requires:
-    Test::More:      0
-    WWW::Mechanize:  1.2
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.50
+  ExtUtils::MakeMaker: 6.42
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
+distribution_type: module
+generated_by: 'Module::Install version 0.91'
+license: perl
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: WWW-Mechanize-Meta
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  HTML::HeadParser: 0
+  HTTP::Headers: 0
+  WWW::Mechanize: 1.2
+resources:
+  license: http://dev.perl.org/licenses/
+  repository: http://developers.rambler.ru/svn/perlmodules/WWW-Mechanize-Meta
+version: 0.07

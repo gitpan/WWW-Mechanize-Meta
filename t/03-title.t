@@ -1,4 +1,4 @@
-#!perl -T
+#!perl
 #use Test::More skip_all => 'Bug with encoding was not fixed';
 use Test::More tests => 3;
 use utf8;
